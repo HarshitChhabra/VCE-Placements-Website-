@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <title>Delete Drive</title>
+    </head>
+    <body>
+        <div class="container">
+            <br><h2>Do you want to delete this?</h2><br>
+
+            <div class="card">
+                <% if(company) { %>
+                <h5 class="card-header"><%= company[0].name %></h5>
+                <div class="card-body">
+                    <p><b>Minimum GPA:</b> <%= company[0].gpa %></p>
+                    <p><b>Eligible branches:</b> <%= company[0].branches.join(' ') %> </p>
+                    <p><b>Package:</b> <%= company[0].package + 'LPA' %> </p>
+                    <p><b>Drive date:</b> <%=  'From: '+company[0].fromDate.getDate() + '-' + (company[0].fromDate.getMonth()+1) +'-' + company[0].fromDate.getFullYear()+'  To: '+company[0].endDate.getDate() + '-' + (company[0].endDate.getMonth()+1) +'-' + company[0].endDate.getFullYear() %></p>
+                    <p><b>Required Qualifications:</b> <pre><%= company[0].qualifications %> </pre></p>
+                    <p><b>Job description:</b> <pre> <%= company[0].jobDescription %> </pre> </p>
+                    <div style="text-align: center">
+                        <form method="post">
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='/faculty'">No</button>
+                            <button type="submit" class="btn btn-success">Yes</button>
+                        </form>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+           
+        </div>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        input[type="text"],input[type="number"],textarea{
+            border: 0;
+            display:block;
+            margin: 36px auto;
+            text-align: center;
+            border: 2px solid blue;
+            padding : 14px 10px;
+            width : 350px;
+            border-radius: 24px;
+            transition: 0.5s;
+            
+        }   
+        .readOnlyFormatting{
+            border: 0;
+            display:block;
+            margin: 36px auto;
+            text-align: center;
+            background-color: #DCDCDC;
+            border: 2px solid blue;
+            padding : 14px 10px;
+            width : 350px;
+            border-radius: 24px;
+            transition: 0.5s;
+        }
+        input[type="text"]:focus,input[type="number"]:focus,textarea:focus{
+            width:420px;
+        }
+         body{
+            background-image: url("https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+            background-repeat:no-repeat;
+            background-size:cover;
+            
+        }
+        h1{
+            color: aliceblue;
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/sytling.css"> 
+    </head>
+    <body>
+    <div class="container">
+            <br><h1 style="text-align: center; font-family:robik;font-weight: 600;" >BUILD YOUR PROFILE</h1><br>
+        <div class="alert alert-danger" id="errorMessage"></div>
+        <form method="Post" action="" onsubmit="return validate()">
+        <div style="width:50%; margin:0 auto;">
+            <input class="readOnlyFormatting" type="email" id="email" name="email" value="<%= email %>" readonly />
+            <input  type="text" id="name" name="name" placeholder="Enter your name" required/>
+            <input  type="text" id="rno" name="rno" placeholder="Roll Number (Eg. 1602-16-733-014)" pattern="1602-16-73[2-7]-(00[1-9]|0[1-9][0-9]|1[01][0-9]|120|30[1-9]|31[0-9]|32[0-5])" required/>
+            <input  type="text" id="phoneno" name="phoneno" placeholder="Phone Number (No country codes)" pattern="[6789][0-9]{9}" required/>
+            <input  type="number" min="1" MAX="10" name="cgpa" step="0.01" placeholder="CGPA (Eg. 8.56)" required/>
+            <input  type="number" min="0" max="10" name="backlogs" placeholder="Enter no of backlogs" required/>
+            <textarea  id="aboutme" name="aboutme" placeholder="Aboutme (Write 'NILL' if not applicable)" rows="4" cols="50" required></textarea>
+            <textarea  id="achievements" name="achievements"  rows="4" cols="50" placeholder="Achievements (Write 'NILL' if not applicable)"  required></textarea>
+            <div style="text-align: center">
+                <input class="btn btn-lg btn-dark" type="submit" name="submit1" value="Submit"/> 
+            </div>
+        </div>
+        </form>
+        </div>
+        <script>
+                $("#errorMessage").hide();
+                function validate(){
+                    err="";
+                    flag=0;
+                    if($("#name").val().trim()==''){
+                        err+='<p> Name is mandatory</p>';
+                        flag=1;
+                    }
+                    if($("#rno").val().trim()==''){
+                        err+='<p> Rno is mandatory</p>';
+                        flag=1;
+                    }
+                    
+                    if($("#email").val().trim()==''){
+                        err+='<p> Email is mandatory</p>';
+                        flag=1;
+                    }
+    
+                    if($("#phoneno").val().length!=10)
+                    {
+                        err+='<p> Enter  a valid phone no</p>';
+                        flag=1;
+                    }
+
+                    if($("#aboutme").val().trim()=='')
+                    {
+                        err+='<p> About me field cannot be left empty</p>';
+                        flag=1;
+                    }
+
+                    if($("#achievements").val().trim()=='')
+                    {
+                        err+='<p> Achievements field cannot be left empty</p>';
+                        flag=1;
+                    }
+                    if(flag==0)
+                    {
+                        $("#errorMessage").hide();
+                        return true;
+                    }
+                    else
+                    {
+                        $("#errorMessage").html(err);
+                        $("#errorMessage").show();
+                        window.scrollTo(0,0);
+                        return false;
+                    }
+                }
+                </script>
+    </body>
+    

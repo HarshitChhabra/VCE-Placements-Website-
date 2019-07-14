@@ -1,0 +1,166 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="http://localhost:2564/assets/css/navbarStyle.css">
+        <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+        <title>Dashboard</title>
+
+        <style>
+            .number {
+                background: #1abc9c;
+                color: #fff;
+                height: 30px;
+                width: 30px;
+                display: inline-block;
+                font-size: 0.8em;
+                margin-right: 4px;
+                line-height: 30px;
+                text-align: center;
+                text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+                border-radius: 15px 15px 15px 0px;
+            }
+            body {
+                background-image: url(../assets/images/back-2.jpg);
+                background-size: cover;
+                font-family: 'Roboto Condensed', sans-serif;
+                font-weight: bold;
+                height: 100vh;
+            }
+            h2{
+                font: 400 60px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+                /* color: #2b2b2b; */
+                color: #F8F8F8;
+                text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
+            }
+            .fontStyle{
+                font: 400 30px/1.3 'Oleo Script', Helvetica, sans-serif;
+                color: #2b2b2b;
+                text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        
+        <br><h2>Companies</h2><br>
+
+        <div class="navigation-wrapper" style="z-index: 1;">
+            <div class="navigation-button">
+                <i class="fa fa-bars" style="background-color:black;"></i>
+            </div>
+            <div class="navigation-menu">
+                <ul>
+                    <li><a href="/student">HOME</a></li>
+                    <li><a href="/student/profile">PROFILE</a></li>
+                    <li><a href="/student/applied">APPLIED COMPANIES</a></li>
+                    <li><a href="/student/companies">UPCOMING COMPANIES</a>
+                    <li><a href="/logout">LOGOUT</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal fade" id="confirmApply" tabindex="-1" role="dialog" aria-labelledby="confirmApplyTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmApplyTitle">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <em aria-hidden="true">&times;</em>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalContent">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="applyForCompany()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="accordion" id="accordionExample">
+
+            <% if(companies.length==0) { %>
+                <h2>No placement drives</h2>
+
+            <% } %>
+            <% var i=0;
+            for(i=0;i<companies.length;i++) { %>
+            <div class="card">
+                <div class="card-header" id="headingTwo" style="padding:0;">
+                    <h5 class="mb-0">
+                        <button style="background:none;border:none; padding:30px;" class="list-group-item list-group-item-action fontStyle" type="button" data-toggle="collapse" data-target="#<%= companies[i].name.replace(' ','') %>" aria-expanded="false" aria-controls="collapseTwo">
+                               <span class="number"> <%= (i+1) %></span> &nbsp; &nbsp; <%= companies[i].name %> 
+                        </button>
+                    </h5>
+                </div>
+                <div style="border-color:#c0c0c0; border-radius: 3px; border: 1px solid;" id="<%= companies[i].name.replace(' ','') %>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <p><b>Minimum GPA:</b> <%= companies[i].gpa %></p>
+                        <p><b>Eligible branches:</b> <%= companies[i].branches.join(' ') %> </p>
+                        <p><b>Package:</b> <%= companies[i].package + 'LPA' %> </p>
+                        <p><b>Drive date:</b> <%=  'From: '+companies[i].fromDate.getDate() + '-' + (companies[i].fromDate.getMonth()+1) +'-' + companies[i].fromDate.getFullYear()+'  To: '+companies[i].endDate.getDate() + '-' + (companies[i].endDate.getMonth()+1) +'-' + companies[i].endDate.getFullYear() %></p>
+                        <p><b>Required Qualifications:</b> <pre><%= companies[i].qualifications %> </pre></p>
+                        <p><b>Job description:</b> <pre> <%= companies[i].jobDescription %> </pre> </p>
+                        <div style="text-align: center;">
+                            <br><button class="btn btn-primary" onclick="dispConfirmation('<%= companies[i].name %>')">Apply</button><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <% for(var j=i;j<applied.length+i;j++) { %>
+            <div class="card">
+                <div class="card-header" id="headingTwo" style="padding:0;">
+                    <h5 class="mb-0">
+                        <button style="background:none;border:none; padding:30px;" class="list-group-item list-group-item-action fontStyle" type="button" data-toggle="collapse" data-target="#<%= applied[j-i].name.replace(' ','') %>" aria-expanded="false" aria-controls="collapseTwo">
+                               <span class="number"> <%= (j+1) %></span> &nbsp; &nbsp; <%= applied[j-i].name %> 
+                        </button>
+                    </h5>
+                </div>
+                <div style="border-color:#c0c0c0; border-radius: 3px; border: 1px solid;" id="<%= applied[j-i].name.replace(' ','') %>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <p><b>Minimum GPA:</b> <%= applied[j-i].gpa %></p>
+                        <p><b>Eligible branches:</b> <%= applied[j-i].branches.join(' ') %> </p>
+                        <p><b>Package:</b> <%= applied[j-i].package + 'LPA' %> </p>
+                        <p><b>Drive date:</b> <%=  'From: '+applied[j-i].fromDate.getDate() + '-' + (applied[j-i].fromDate.getMonth()+1) +'-' + applied[j-i].fromDate.getFullYear()+'  To: '+applied[j-i].endDate.getDate() + '-' + (applied[j-i].endDate.getMonth()+1) +'-' + applied[j-i].endDate.getFullYear() %></p>
+                        <p><b>Required Qualifications:</b> <pre><%= applied[j-i].qualifications %> </pre></p>
+                        <p><b>Job description:</b> <pre> <%= applied[j-i].jobDescription %> </pre> </p>
+                        <div style="text-align: center;">
+                            <br><button class="btn btn-secondary" disabled>Applied</button><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+    
+    <script src="http://localhost:2564/assets/js/navbarJs.js"></script>
+    <script>
+        
+        function applyForDrive(company){
+            console.log(company);
+        }
+
+        function dispConfirmation(name){
+            $("#modalContent").html('<p> Do you want to apply for <em id="cmpname1">'+name+'</em> ?</p>')
+            $('#confirmApply').modal('show');
+        }
+
+        function applyForCompany(){
+            console.log($("#cmpname1").html());
+            window.location = 'http://localhost:2564/student/applyCompany/'+$("#cmpname1").html();
+        }
+
+    </script>
+    </body>
+</html>
