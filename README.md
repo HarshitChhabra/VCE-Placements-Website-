@@ -1,0 +1,2 @@
+# VCE-Placements-Website-
+This is a website built using Node JS and Mongo DB (uses Embedded JS for frontend) to manage placement activities in a college.  FirebaseAuth is used for authentication.  Users: Student and Faculty  Features:  Student Apply for drive Edit profile View upcoming companies View applied companies Faculty Add new placement drive. Send emails to students. View the received applications for a drive. View student's profile. Remove placement drive.
